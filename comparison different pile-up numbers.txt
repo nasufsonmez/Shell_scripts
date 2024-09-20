@@ -1,0 +1,51 @@
+
+ls /truba_scratch/nsonmez/POWHEG-BOX/ST_tch/testrun_*/unweighted_events_mhc90.root > ntuple_list_files/list_singletop_t2t3_mhc90
+ls /truba_scratch/nsonmez/POWHEG-BOX/ST_tch/testrun_*/unweighted_events_mhc100.root > ntuple_list_files/list_singletop_t2t3_mhc100
+ls /truba_scratch/nsonmez/POWHEG-BOX/ST_tch/testrun_*/unweighted_events_mhc110.root > ntuple_list_files/list_singletop_t2t3_mhc110
+ls /truba_scratch/nsonmez/POWHEG-BOX/ST_tch/testrun_*/unweighted_events_mhc120.root > ntuple_list_files/list_singletop_t2t3_mhc120
+
+
+ls /truba_scratch/nsonmez/MG5_aMC_v2_5_5/singletop_tw_mhc90/Events/run_*/tag_1_delphes_events.root  > ntuple_list_files/list_singletop_tw_mhc90
+ls /truba_scratch/nsonmez/MG5_aMC_v2_5_5/singletop_tw_mhc100/Events/run_*/tag_1_delphes_events.root > ntuple_list_files/list_singletop_tw_mhc100
+ls /truba_scratch/nsonmez/MG5_aMC_v2_5_5/singletop_tw_mhc110/Events/run_*/tag_1_delphes_events.root > ntuple_list_files/list_singletop_tw_mhc110
+ls /truba_scratch/nsonmez/MG5_aMC_v2_5_5/singletop_tw_mhc120/Events/run_*/tag_1_delphes_events.root > ntuple_list_files/list_singletop_tw_mhc120
+
+
+{
+./create_ntuple ntuple_list_files/input_signal_t2t3_mhc90.par   > output_singletop_t2t3_25Mar2018
+./create_ntuple ntuple_list_files/input_signal_t2t3_mhc100.par >> output_singletop_t2t3_25Mar2018
+./create_ntuple ntuple_list_files/input_signal_t2t3_mhc110.par >> output_singletop_t2t3_25Mar2018
+./create_ntuple ntuple_list_files/input_signal_t2t3_mhc120.par >> output_singletop_t2t3_25Mar2018
+} &
+
+
+{
+./create_ntuple ntuple_list_files/input_signal_tw_mhc90.par   > output_singletop_tw_25Mar2018
+./create_ntuple ntuple_list_files/input_signal_tw_mhc100.par >> output_singletop_tw_25Mar2018
+./create_ntuple ntuple_list_files/input_signal_tw_mhc110.par >> output_singletop_tw_25Mar2018
+./create_ntuple ntuple_list_files/input_signal_tw_mhc120.par >> output_singletop_tw_25Mar2018
+} &
+
+mhc=90
+
+hadd background_mhc${mhc}_lumi300ipb_bjet_gt_0.root \
+wbb*_mhc${mhc}_lumi300ipb_bjet_gt_0.root \
+wmp*_mhc${mhc}_lumi300ipb_bjet_gt_0.root \
+wc*_mhc${mhc}_lumi300ipb_bjet_gt_0.root \
+back_singletop_*_mhc${mhc}_lumi300ipb_bjet_gt_0.root \
+ttjets_*_mhc${mhc}_lumi300ipb_bjet_gt_0.root
+
+{
+./read_files 08100 750000  > output_read_files_signal
+./read_files 10000 900000 >> output_read_files_signal
+./read_files 12100 1000000 >> output_read_files_signal
+./read_files 14400 1500000 >> output_read_files_signal
+} &
+
+
+mhc=120
+lumi=1500
+
+hadd signal_mhc${mhc}_lumi${lumi}ipb_bjet_gt_0.root \
+singletop_tw_mhc${mhc}_lumi${lumi}ifb_bjet_gt_0.root \
+singletop_t2t3_mhc${mhc}_lumi${lumi}ifb_bjet_gt_0.root

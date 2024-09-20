@@ -1,0 +1,34 @@
+14 TeV, Wbb + 0-jets, process : 21, 26, 
+pT>20 GeV, |Delta eta|<2.4, |Delta Rij|<0.7, MET >20 GeV
+
+
+W+
+|Delta eta|<2.4	|Delta eta|<2.4	|Delta eta|<3.0	|Delta eta|<4.0	|Delta eta|<5.0
+3.869 pb 		4.016 pb		4.653 pb		5.456 pb		5.679 pb
+
+09328 pb
+12482 pb
+
+proc : 22       nlo integral is   508.730     +/-   9.5002     pb
+proc : 27       nlo integral is   389.185     +/-   11.669     pb
+
+
+
+
+ls /truba_scratch/nsonmez/MG5_aMC_v2_5_5/ttjets_semilept/Events/run_*/tag_1_delphes_events.root > ntuple_list_files/list_ttjets_semilept
+ls /truba_scratch/nsonmez/MG5_aMC_v2_5_5/ttjets_lept/Events/run_*/tag_1_delphes_events.root > ntuple_list_files/list_ttjets_lept
+ls /truba_scratch/nsonmez/MG5_aMC_v2_5_5/ttjets_hadr/Events/run_*/tag_1_delphes_events.root > ntuple_list_files/list_ttjets_hadr
+
+ls /truba_scratch/nsonmez/MG5_aMC_v2_5_5/wbb0jetsv2/Events/run_*/tag_1_delphes_events.root > ntuple_list_files/list_wbb0jets
+ls /truba_scratch/nsonmez/MG5_aMC_v2_5_5/wbb1jetsv2/Events/run_*/tag_1_delphes_events.root > ntuple_list_files/list_wbb1jets
+ls /truba_scratch/nsonmez/MG5_aMC_v2_5_5/wbb2jetsv2/Events/run_*/tag_1_delphes_events.root > ntuple_list_files/list_wbb2jets
+
+ls /truba_scratch/nsonmez/MG5_aMC_v2_5_5/wc0jetsv2/Events/run_*/tag_1_delphes_events.root > ntuple_list_files/list_wc0jets
+ls /truba_scratch/nsonmez/MG5_aMC_v2_5_5/wc1jetsv2/Events/run_*/tag_1_delphes_events.root > ntuple_list_files/list_wc1jets
+ls /truba_scratch/nsonmez/MG5_aMC_v2_5_5/wc2jetsv2/Events/run_*/tag_1_delphes_events.root > ntuple_list_files/list_wc2jets
+
+ls /truba_scratch/nsonmez/MG5_aMC_v2_5_5/wmp0jetsv2/Events/run_*/tag_1_delphes_events.root > ntuple_list_files/list_wmp0jets
+ls /truba_scratch/nsonmez/MG5_aMC_v2_5_5/wmp1jetsv2/Events/run_*/tag_1_delphes_events.root > ntuple_list_files/list_wmp1jets
+ls /truba_scratch/nsonmez/MG5_aMC_v2_5_5/wmp2jetsv2/Events/run_*/tag_1_delphes_events.root > ntuple_list_files/list_wmp2jets
+
+

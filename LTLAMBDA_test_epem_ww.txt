@@ -1,0 +1,94 @@
+YAPILACAKLAR
+
+1. epem->ww sacilma tesir kesiti icin LTLAMBDA degisiminde nasil sonuc degisiyor, ozellikle virtual duzeltme
+1a. epem->ww hesabini farkli lambdalar icinde yap yine benzer sekilde birbirini goturebilir mi? yok yok neden gotursun epem->wwgamma da lambda bagligi yok ki
+2. self, vert ve box duzeltme katkilari icin LTLAMBDA degisimi nasil etkiliyor, belli bir diyagrami etkiliyor olabilirmi
+3, boyutsal regularizasyon icin yukaridaki denemeleri kontrol et.
+
+
+deltas=1D-3, deltac=1D-3
+
+LAMBDA 1D00   all  	500.0000000           6.43299984401087       -5.71042979976469
+LAMBDA 1D01   all  	500.0000000           6.43299984401087       -5.64161613587553
+LAMBDA 1D08   all  	500.0000000           6.43299984401087       -5.15992048865141 
+LAMBDA 1D10   all  	500.0000000           6.43299984401087       -5.02229316087308  
+LAMBDA 1D14   all  	500.0000000           6.43299984401087       -4.74703850531644
+LAMBDA 1D15   all  	500.0000000           6.43299984401087       -4.67822484142728 
+LAMBDA 1D16   all  	500.0000000           6.43299984401087       -4.60941117753812 
+LAMBDA 1D20   all  	500.0000000           6.43299984401087       -4.33415652198148 
+LAMBDA 1D30   all  	500.0000000           6.43299984401087       -3.64601988308987 
+LAMBDA 1D40   all  	500.0000000           6.43299984401087       -2.95788324419827 
+LAMBDA 1D100  all  	500.0000000           6.43299984401087        1.17093658915137
+
+#softphoton included
+
+LAMBDA 1D1   self	500.0000000           6.43299984401087       -6.28002835137715           9.41494800480755        9.05085398915754    
+LAMBDA 1D10  self	500.0000000           6.43299984401087       -13.7220483779549           9.41494800480755        19.4446430771701    
+LAMBDA 1D100 self	500.0000000           6.43299984401087       -88.1422486437320           9.41494800480755        123.382533957296    
+
+LAMBDA 1D1   vert	500.0000000           6.43299984401087       -7.29902791832497           9.41494800480755        8.66410439215462    
+LAMBDA 1D10  vert	500.0000000           6.43299984401087       -11.0885310989977           9.41494800480755        9.70560804462494    
+LAMBDA 1D100 vert	500.0000000           6.43299984401087       -48.9835629057254           9.41494800480755        1.02223473666569    
+
+LAMBDA 1D1   box	500.0000000           6.43299984401087       -5.16514084885023           9.41494800480755        8.99984116729636    
+LAMBDA 1D10  box	500.0000000           6.43299984401087       -8.19833471975273           9.41494800480755        17.5764210665046    
+LAMBDA 1D100 box	500.0000000           6.43299984401087       -38.5302734287777           9.41494800480755        103.342220058587    
+
+
+for i in 1 10 100
+for i in 0 -1 -2
+do
+  gsed -i "s/define LAMBDA 1D[0-9]*/define LAMBDA 1D${i}/g" run_soft.F
+  make run_soft
+  ./run_soft uuuu 500,500,${i}
+  ./tools/data ./run_soft.uuuu.00500,00500,*
+done
+
+make run_soft
+nohup ./run_soft uuuuu 500,500,8 &
+./tools/data run_soft.uuuuu.00500,00500,00008
+mv run_soft.uuuuu.00500,00500,00008.data run_soft.uuuuu.00500,00500_LTLAMBDA_1D0.data
+
+for bp in {2..45}
+do
+	gfortran -O3 -march=native -g -ffixed-line-length-none -fdefault-real-8 -DU77EXT=0 \
+	-I./F -I. -I. -I./include -I../LoopTools-2.14/build-quad -DPREFIX= \
+	-o run_bench${bp} run_bench${bp}.F \
+	squaredme.a util.a ../LoopTools-2.14/build-quad/libooptools-quad.a -lquadmath libgfortran.a
+done
+
+
+for bp in {2..45}
+do
+./tools/pnuglot -2 run_bench${bp}.uuuuu.*
+done
+
+for bp in {2..45}
+do
+make run_bench${bp}
+done
+
+
+gfortran -O3 -march=native -g -ffixed-line-length-none -fdefault-real-8 -DU77EXT=0 \
+-I./F -I. -I. -I./include -I../LoopTools-2.14/build-quad -DPREFIX= \
+-o run run.F \
+squaredme.a util.a ../LoopTools-2.14/build-quad/libooptools-quad.a -lquadmath libgfortran.a
+
+
+
+
+#!/bin/bash
+bp=$1
+pol=$2
+
+smin=800
+smax=2500
+step=25
+
+cd /formcalc_work_space/epem_HpHmZ0_2hdm.fortran
+
+./run_bench${bp} ${pol} ${smin},${smax},${sstep}
+
+echo "done"
+
+

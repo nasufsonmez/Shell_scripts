@@ -1,0 +1,71 @@
+BenchmarkPoint:=19,22 (b-1,b-4)
+
+sed -i "s/BenchmarkPoint:=[0-9]*/BenchmarkPoint:=4/g" ~/vv_3h.m ; 
+
+sed -i "s/proc:=[0-9]*/proc:=2/g" ~/vv_3h.m; 
+sed -i "s/YCTypes:=[0-9]*/YCTypes:=2/g" ~/vv_3h.m; 
+
+sed  "s/BenchmarkPoint:=[0-9]*/BenchmarkPoint:=10/g" ~/vv_3h.m > ~/vv_3h_bench10.m
+sed  "s/BenchmarkPoint:=[0-9]*/BenchmarkPoint:=13/g" ~/vv_3h.m > ~/vv_3h_bench13.m
+sed  "s/BenchmarkPoint:=[0-9]*/BenchmarkPoint:=17/g" ~/vv_3h.m > ~/vv_3h_bench17.m
+sed  "s/BenchmarkPoint:=[0-9]*/BenchmarkPoint:=18/g" ~/vv_3h.m > ~/vv_3h_bench18.m
+sed  "s/BenchmarkPoint:=[0-9]*/BenchmarkPoint:=21/g" ~/vv_3h.m > ~/vv_3h_bench21.m
+sed  "s/BenchmarkPoint:=[0-9]*/BenchmarkPoint:=22/g" ~/vv_3h.m > ~/vv_3h_bench22.m
+sed  "s/BenchmarkPoint:=[0-9]*/BenchmarkPoint:=24/g" ~/vv_3h.m > ~/vv_3h_bench24.m
+
+echo '~/wolf/bin/math<~/vv_3h_bench24.m' | qsub -l hostname=compute-0-10
+echo '~/wolf/bin/math<~/vv_3h_bench21.m' | qsub -l hostname=compute-0-12
+echo '~/wolf/bin/math<~/vv_3h_bench22.m' | qsub -l hostname=compute-0-1
+echo '~/wolf/bin/math<~/vv_3h_bench18.m' | qsub -l hostname=compute-0-21
+echo '~/wolf/bin/math<~/vv_3h_bench10.m' | qsub -l hostname=compute-0-6	
+echo '~/wolf/bin/math<~/vv_3h_bench13.m' | qsub -l hostname=compute-0-8	
+
+echo '~/wolf/bin/math<~/epem_neuneu_amplitude.m' | qsub -l hostname=compute-0-16	
+
+
+sed "s/YCTypes:=[0-9]*/YCTypes:=1/g" ~/vv_3h.m
+sed -i "s/BenchmarkPoint:=[0-9]*/BenchmarkPoint:=5/g" ~/vv_3h.m ; 
+
+
+sed -i "s/proc:=[0-9]*/proc:=2/g" ~/vv_3h.m; 
+
+~/wolf/bin/math<~/vv_3h_node14.m
+
+sed -i "s/proc:=[0-9]*/proc:=2/g" ~/vv_3h_node14; 
+~/wolf/bin/math<~/vv_3h_node14.m
+
+
+echo '~/wolf/bin/math<~/test.m' | qsub -l hostname=compute-0-13
+
+
+sed  "s/proc:=[0-9]*/proc:=1/g" ~/vv_3h.m > ~/vv_3h_proc1.m
+sed  "s/proc:=[0-9]*/proc:=2/g" ~/vv_3h.m > ~/vv_3h_proc2.m
+sed  "s/proc:=[0-9]*/proc:=3/g" ~/vv_3h.m > ~/vv_3h_proc3.m
+sed  "s/proc:=[0-9]*/proc:=4/g" ~/vv_3h.m > ~/vv_3h_proc4.m
+sed  "s/proc:=[0-9]*/proc:=5/g" ~/vv_3h.m > ~/vv_3h_proc5.m
+sed  "s/proc:=[0-9]*/proc:=7/g" ~/vv_3h.m > ~/vv_3h_proc7.m
+sed  "s/proc:=[0-9]*/proc:=8/g" ~/vv_3h.m > ~/vv_3h_proc8.m
+
+sed  "s/proc:=[0-9]*/proc:=10/g" ~/vv_3h.m > ~/vv_3h_proc10.m
+sed  "s/proc:=[0-9]*/proc:=11/g" ~/vv_3h.m > ~/vv_3h_proc11.m
+
+
+echo '~/wolf/bin/math<~/vv_3h_proc1.m' | qsub -l hostname=compute-0-14  
+echo '~/wolf/bin/math<~/vv_3h_proc2.m' | qsub -l hostname=compute-0-15 
+echo '~/wolf/bin/math<~/vv_3h_proc3.m' | qsub -l hostname=compute-0-16  
+echo '~/wolf/bin/math<~/vv_3h_proc4.m' | qsub -l hostname=compute-0-17	
+echo '~/wolf/bin/math<~/vv_3h_proc5.m' | qsub -l hostname=compute-0-18	
+echo '~/wolf/bin/math<~/vv_3h_proc7.m' | qsub -l hostname=compute-0-19	
+echo '~/wolf/bin/math<~/vv_3h_proc8.m' | qsub -l hostname=compute-0-20
+	
+echo '~/wolf/bin/math<~/vv_3h_proc10.m' | qsub -l hostname=compute-0-14
+echo '~/wolf/bin/math<~/vv_3h_proc11.m' | qsub -l hostname=compute-0-15	
+
+
+awk '{print $3 " &" }' obliq_s
+awk '{print $3 " &" }' obliq_t
+awk '{print $3 " &" }' obliq_u
+awk '{print $3 " &" }' obliq_v
+awk '{print $3 " &" }' obliq_w
+awk '{print $3 " &" }' obliq_z
+
